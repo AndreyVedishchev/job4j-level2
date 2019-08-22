@@ -1,4 +1,5 @@
-package collections;
+package collections.iterator;
+import collections.iterator.ArrayIterator;
 import org.junit.Before;
 import org.junit.Test;
 
