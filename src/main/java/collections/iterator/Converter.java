@@ -2,6 +2,7 @@ package collections.iterator;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Converter {
 
@@ -9,19 +10,38 @@ public class Converter {
 
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         return new Iterator<Integer>() {
+
+            Iterator<Integer> curr;
+
             @Override
             public boolean hasNext() {
-                return it.next().hasNext();
+                boolean res = false;
+
+                if (!it.hasNext() && it.next() == null) {
+                    throw new NoSuchElementException();
+                } else {
+                    curr = it.next();
+                }
+
+                if (curr.hasNext()) {
+                    res = true;
+                }
+
+                return res;
             }
 
             @Override
             public Integer next() {
-                final Integer res;
-                it.forEachRemaining(obj -> {
-                    if (obj.hasNext()) {
-                        res = obj.next();
-                    }
-                });
+                int res;
+
+                if (it.hasNext()) {
+                    curr = it.next();
+                }
+
+                if (curr.hasNext()) {
+                    res = curr.next();
+                } else throw new NoSuchElementException();
+
                 return res;
             }
         };
