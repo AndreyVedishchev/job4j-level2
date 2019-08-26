@@ -6,43 +6,25 @@ import java.util.Iterator;
 public class SimpleArray<T> implements Iterable<T>{
 
     private Object[] arr;
+    private int position = 0;
 
     public SimpleArray(int size) {
         this.arr = new Object[size];
     }
 
     public void add(T model) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == null) {
-                arr[i] = model;
-                break;
-            }
-        }
+        this.arr[position++] = model;
     }
 
     public void set(int index, T model) {
-        for (int i = 0; i < arr.length; i++) {
-            if (i == index) {
-                arr[i] = model;
-            }
+        if (index <= position) {
+            arr[index] = model;
         }
     }
 
     public void remove(int index) {
-        for (int i = 0; i < arr.length; i++) {
-            if (i == index) {
-                if (i == arr.length - 1) {
-                    arr[i] = null;
-                } else {
-                    for (int j = i; j < arr.length - 1; j++) {
-                        arr[j] = arr[j + 1];
-                        if (arr[j] == arr[arr.length - 1]) {
-                            arr[j + 1] = null;
-                        }
-                    }
-                }
-            }
-        }
+        System.arraycopy(arr, index + 1, arr, index,position - index);
+        arr[arr.length - 1] = null;
     }
 
     public T get(int index) {
@@ -62,7 +44,7 @@ public class SimpleArray<T> implements Iterable<T>{
 
             @Override
             public boolean hasNext() {
-                return arr.length > index;
+                return arr.length - 1 > index;
             }
 
             @Override
@@ -82,7 +64,7 @@ public class SimpleArray<T> implements Iterable<T>{
         sim.add(9);
 
         System.out.println(sim.toString());
-        sim.remove(2);
+        sim.remove(4);
         System.out.println(sim.toString());
         sim.set(5, 99);
         System.out.println(sim.toString());
