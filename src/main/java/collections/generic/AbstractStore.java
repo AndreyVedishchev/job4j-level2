@@ -1,6 +1,6 @@
 package collections.generic;
 
-public abstract class AbstractStore<T extends Base> implements Store{
+public abstract class AbstractStore<T extends Base> implements Store<T>{
 
     private final SimpleArray<T> arr;
 
@@ -8,11 +8,11 @@ public abstract class AbstractStore<T extends Base> implements Store{
         arr = new SimpleArray<>(size);
     }
 
-    public abstract void add(Base model);
+    public abstract void add(T model);
 
     public abstract boolean replace(String id, Base model);
 
     public abstract boolean delete(String id);
 
-    public abstract Base findById(String id);
+    public abstract T findById(String id);
 }

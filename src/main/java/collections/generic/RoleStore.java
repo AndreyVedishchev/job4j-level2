@@ -1,33 +1,45 @@
 package collections.generic;
 
-public class RoleStore<T extends Base> implements Store<T> {
+public class RoleStore implements Store<Role> {
 
     private final SimpleArray<Role> arr;
+    private final int size;
 
     public RoleStore(int size) {
         arr = new SimpleArray<>(size);
+        this.size = size;
     }
 
     @Override
-    public void add(T model) {
-        arr.add((Role) model);
+    public void add(Role model) {
+        arr.add(model);
     }
 
     @Override
-    public boolean replace(String id, T model) {
-        arr.set(Integer.valueOf(id), (Role) model);
+    public boolean replace(String id, Role model) {
+        arr.set(getIndex(id), model);
         return findById(id).getId().equals(model.getId());
     }
 
     @Override
     public boolean delete(String id) {
-        T u1 = findById(id);
-        arr.remove(Integer.valueOf(id));
+        Role u1 = findById(id);
+        arr.remove(getIndex(id));
         return !(findById(id).getId().equals(u1.getId()));
     }
 
     @Override
-    public T findById(String id) {
-        return (T) arr.get(Integer.valueOf(id));
+    public Role findById(String id) {
+        return arr.get(getIndex(id));
+    }
+
+    public int getIndex(String id) {
+        int res = -1;
+        for (int i = 0; i < size; i++) {
+            if (id.equals(arr.get(i).getId())) {
+                res = i;
+            }
+        }
+        return res;
     }
 }
