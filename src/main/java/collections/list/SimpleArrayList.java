@@ -26,7 +26,7 @@ public class SimpleArrayList<E> {
         this.first = this.first.next;
         del.next = null;
         size--;
-        return (E) this.first;
+        return del.data;
     }
 
     /**
