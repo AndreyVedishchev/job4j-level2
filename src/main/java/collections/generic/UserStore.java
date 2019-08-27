@@ -17,12 +17,18 @@ public class UserStore implements Store<User> {
 
     @Override
     public boolean replace(String id, User model) {
+        if (getIndex(id) == -1) {
+            return false;
+        }
         arr.set(getIndex(id), model);
         return findById(id).getId().equals(model.getId());
     }
 
     @Override
     public boolean delete(String id) {
+        if (getIndex(id) == -1) {
+            return false;
+        }
         User u1 = findById(id);
         arr.remove(getIndex(id));
         return !(findById(id).getId().equals(u1.getId()));
@@ -30,6 +36,9 @@ public class UserStore implements Store<User> {
 
     @Override
     public User findById(String id) {
+        if (getIndex(id) == -1) {
+            return null;
+        }
         return arr.get(getIndex(id));
     }
 

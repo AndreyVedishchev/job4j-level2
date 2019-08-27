@@ -17,12 +17,18 @@ public class RoleStore implements Store<Role> {
 
     @Override
     public boolean replace(String id, Role model) {
+        if (getIndex(id) == -1) {
+            return false;
+        }
         arr.set(getIndex(id), model);
         return findById(id).getId().equals(model.getId());
     }
 
     @Override
     public boolean delete(String id) {
+        if (getIndex(id) == -1) {
+            return false;
+        }
         Role u1 = findById(id);
         arr.remove(getIndex(id));
         return !(findById(id).getId().equals(u1.getId()));
@@ -30,6 +36,9 @@ public class RoleStore implements Store<Role> {
 
     @Override
     public Role findById(String id) {
+        if (getIndex(id) == -1) {
+            return null;
+        }
         return arr.get(getIndex(id));
     }
 
