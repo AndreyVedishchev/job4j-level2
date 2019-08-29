@@ -13,7 +13,8 @@ public class SimpleArray<T> implements Iterable<T>{
     }
 
     public void add(T model) {
-        this.arr[position++] = model;
+        arr[position] = model;
+        position++;
     }
 
     public void set(int index, T model) {
@@ -31,9 +32,8 @@ public class SimpleArray<T> implements Iterable<T>{
         return (T) arr[index];
     }
 
-    @Override
-    public String toString() {
-        return Arrays.toString(arr);
+    public void print() {
+        System.out.println(Arrays.toString(this.arr));
     }
 
     @Override
@@ -56,17 +56,11 @@ public class SimpleArray<T> implements Iterable<T>{
     }
 
     public static void main(String[] args) {
-        SimpleArray<Integer> sim = new SimpleArray<>(7);
-        sim.add(1);
-        sim.add(7);
-        sim.add(5);
-        sim.add(8);
-        sim.add(9);
+        UserStore us = new UserStore(4);
+        us.add(new User("111"));
+        us.add(new User("222"));
+        us.add(new User("333"));
 
-        System.out.println(sim.toString());
-        sim.remove(4);
-        System.out.println(sim.toString());
-        sim.set(5, 99);
-        System.out.println(sim.toString());
+        us.print();
     }
 }

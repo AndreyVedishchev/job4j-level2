@@ -6,4 +6,8 @@ public class User extends Base {
         super(id);
     }
 
+    @Override
+    public String toString() {
+        return "User id = " + getId();
+    }
 }
